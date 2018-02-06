@@ -1,7 +1,10 @@
-﻿using Gardilot.Integration;
+﻿using Gardilot.SharedKernel;
+using Gardilot.SharedKernel.Sensors;
+using Gardilot.SharedKernel.Sensors.Messages;
 using System;
 using System.Linq;
 using System.Reactive.Linq;
+using LightInject;
 
 namespace Gardilot.CommandLine
 {
@@ -9,8 +12,7 @@ namespace Gardilot.CommandLine
     {
         static void Main(string[] args)
         {
-            var listener = new DhtSensorListener();
-
+            var listener = DependencyInjection.ServiceFactory.GetInstance<ISensor<DhtSensorValues>>();
 
             var eventStream = listener.StartListening();
 
@@ -19,18 +21,21 @@ namespace Gardilot.CommandLine
                 Console.WriteLine($"SensorType: {v.SensorType}\tTemperature: {v.Temperature}\tHumidity: {v.Humidity}");
             });
 
-            eventStream.Buffer(TimeSpan.FromSeconds(10)).Subscribe(v => 
-            {
-                Console.WriteLine($"Average for count: {v.Count}\tTemperature: {v.Average(av => av.Temperature)}\tHumidity: {v.Average(av => av.Humidity)}");
-            });
+            ShowAverageValues(eventStream);
 
             Console.WriteLine("ENTER to exit.");
             Console.ReadLine();
 
-
-
             subscription.Dispose();
             listener.StopListening();
+        }
+
+        private static void ShowAverageValues(IObservable<DhtSensorValues> eventStream)
+        {
+            eventStream.Buffer(TimeSpan.FromSeconds(10)).Subscribe(v =>
+            {
+                Console.WriteLine($"Average for count: {v.Count}\tTemperature: {v.Average(av => av.Temperature)}\tHumidity: {v.Average(av => av.Humidity)}");
+            });
         }
     }
 }

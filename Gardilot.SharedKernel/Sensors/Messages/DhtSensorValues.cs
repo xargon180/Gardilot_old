@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gardilot.Integration
+﻿namespace Gardilot.SharedKernel.Sensors.Messages
 {
     public class DhtSensorValues
     {

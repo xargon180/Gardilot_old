@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gardilot.SharedKernel.Sensors.Messages;
+using Newtonsoft.Json;
 using System;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -6,9 +7,9 @@ using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-namespace Gardilot.Integration
+namespace Gardilot.SharedKernel.Sensors
 {
-    public class DhtSensorListener
+    public class DhtSensorListener : ISensor<DhtSensorValues>
     {
         private MqttClient _client;
         private string _clientId;

@@ -11,12 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LightInject" Version="5.1.2" />
     <PackageReference Include="System.Reactive.Linq" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Gardilot.Domain\Gardilot.Domain.csproj" />
-    <ProjectReference Include="..\Gardilot.Integration\Gardilot.Integration.csproj" />
+    <ProjectReference Include="..\Gardilot.SharedKernel\Gardilot.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>
