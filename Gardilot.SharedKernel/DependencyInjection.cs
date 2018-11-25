@@ -1,27 +1,27 @@
 ﻿using Gardilot.SharedKernel.Sensors;
 using Gardilot.SharedKernel.Sensors.Messages;
-using LightInject;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Gardilot.SharedKernel
 {
     public class DependencyInjection
     {
-        private static Lazy<IServiceContainer> _container = new Lazy<IServiceContainer>(() =>
+        private static Lazy<IServiceProvider> _container = new Lazy<IServiceProvider>(() =>
         {
-            var container = new ServiceContainer();
-            ConfigureContainer(container);
-            return container;
+            var collection = new ServiceCollection();
+            ConfigureContainer(collection);
+            return collection.BuildServiceProvider();
         });
 
-        public static IServiceFactory ServiceFactory
+        public static IServiceProvider ServiceFactory
         {
             get { return _container.Value; }
         }
 
-        private static void ConfigureContainer(IServiceContainer container)
+        public static void ConfigureContainer(IServiceCollection container)
         {
-            container.Register<ISensor<DhtSensorValues>, DhtSensorListener>();
+            container.AddTransient<ISensor<DhtSensorValues>, DhtSensorListener>();
         }
     }
 }

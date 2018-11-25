@@ -4,7 +4,7 @@ using Gardilot.SharedKernel.Sensors.Messages;
 using System;
 using System.Linq;
 using System.Reactive.Linq;
-using LightInject;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Gardilot.CommandLine
 {
@@ -12,7 +12,7 @@ namespace Gardilot.CommandLine
     {
         static void Main(string[] args)
         {
-            var listener = DependencyInjection.ServiceFactory.GetInstance<ISensor<DhtSensorValues>>();
+            var listener = DependencyInjection.ServiceFactory.GetService<ISensor<DhtSensorValues>>();
 
             var eventStream = listener.StartListening();
 
