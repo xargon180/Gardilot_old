@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardilot.Website", "Gardilot.Website\Gardilot.Website.csproj", "{D10C222A-9715-4D74-9597-AA6ADECB439D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardilot.CommandLine", "Gardilot.CommandLine\Gardilot.CommandLine.csproj", "{5CF75473-A915-45D0-AC81-8267CF4695FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardilot.SharedKernel", "Gardilot.SharedKernel\Gardilot.SharedKernel.csproj", "{51E5080A-AED4-4C2A-9CE7-0F7BFFFDBE77}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardilot.Ui", "Gardilot.Ui\Gardilot.Ui.csproj", "{FFDE3607-BC13-4BE7-B9FC-6ED0FB4DC18C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D10C222A-9715-4D74-9597-AA6ADECB439D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D10C222A-9715-4D74-9597-AA6ADECB439D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D10C222A-9715-4D74-9597-AA6ADECB439D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D10C222A-9715-4D74-9597-AA6ADECB439D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5CF75473-A915-45D0-AC81-8267CF4695FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5CF75473-A915-45D0-AC81-8267CF4695FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CF75473-A915-45D0-AC81-8267CF4695FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{51E5080A-AED4-4C2A-9CE7-0F7BFFFDBE77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51E5080A-AED4-4C2A-9CE7-0F7BFFFDBE77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51E5080A-AED4-4C2A-9CE7-0F7BFFFDBE77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFDE3607-BC13-4BE7-B9FC-6ED0FB4DC18C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFDE3607-BC13-4BE7-B9FC-6ED0FB4DC18C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFDE3607-BC13-4BE7-B9FC-6ED0FB4DC18C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFDE3607-BC13-4BE7-B9FC-6ED0FB4DC18C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

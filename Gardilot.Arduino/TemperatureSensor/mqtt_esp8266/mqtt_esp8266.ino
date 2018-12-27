@@ -4,11 +4,12 @@
 #include <DHTesp.h>
 
 // Network settings
-const char* ssid = "FRITZ!Box 7590 EM";
-const char* password = "54956121817415101099";
-const char* mqtt_server = "gruenzeug-server";
+const char* ssid = "FRITZ!Box 4040 FF";
+const char* password = "76629251087878435790";
+const char* mqtt_server = "192.168.178.2";
 
 // Pin settings
+// uint8_t LED_Pin = D4;
 const int led_pin = 2;
 const int sensor_pin = 4;
 
@@ -22,6 +23,7 @@ PubSubClient client;
 
 // Message variables
 long lastMsg = 0;
+long waitBetweenMsgs = 5000; // 5s
 const int max_msg_length = 128;
 char msg[max_msg_length];
 
@@ -61,7 +63,7 @@ void setup_built_in_led() {
 }
 
 void setup_dht_sensor() {
-  dht.setup(sensor_pin, DHTesp::DHT22); // data pin 2
+  dht.setup(sensor_pin, DHTesp::DHT22); // data pin 4
 }
 
 void setup_pub_sub_client() {
@@ -74,10 +76,10 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("Gardilot Sensor (garden/house/)")) {
+    if (client.connect("gardo1")) {
       Serial.println("connected");
       // Once connected, publish an announcement...
-      client.publish("garden/house", "Ready to send environmental data.");
+      client.publish("gardo1/status", "Ready to send environmental data.");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -110,7 +112,8 @@ void loop() {
   client.loop();
 
   long now = millis();
-  if (now - lastMsg > dht.getMinimumSamplingPeriod()) {
+  long msBettwenLastMsg = now - lastMsg;
+  if (msBettwenLastMsg > dht.getMinimumSamplingPeriod() && msBettwenLastMsg > waitBetweenMsgs) {
     lastMsg = now;
 
     // Turn LED on or OFF
@@ -128,19 +131,19 @@ void loop() {
     // Read sensor data
     sensor_values = dht.getTempAndHumidity();
 
-    // Crate json from data
+    // Create json from data
     StaticJsonBuffer<max_msg_length> jsonBuffer;
     JsonObject& root = jsonBuffer.createObject();
-    root["SensorType"] = getSensorName(dht.getModel());
-    root["Temperature"] = sensor_values.temperature;
-    root["Humidity"] = sensor_values.humidity;
+    root["sensorType"] = getSensorName(dht.getModel());
+    root["temperature"] = sensor_values.temperature;
+    root["humidity"] = sensor_values.humidity;
 
-    // Print json to serical
+    // Print json to serial
     Serial.println();
     root.prettyPrintTo(Serial);
 
     // Publish mqtt message with json content
     root.printTo(msg);
-    client.publish("garden/house/kitchen/dht", msg);
+    client.publish("gardo1/temp_and_hum", msg);
   }
 }
