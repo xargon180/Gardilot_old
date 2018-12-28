@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace Gardilot.Ui.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController  : ControllerBase
