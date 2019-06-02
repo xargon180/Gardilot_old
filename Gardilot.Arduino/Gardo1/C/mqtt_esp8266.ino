@@ -2,6 +2,7 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <DHTesp.h>
+#include <RCSwitch.h>
 
 // Network settings
 const char* ssid = "FRITZ!Box 4040 FF";
@@ -9,9 +10,9 @@ const char* password = "76629251087878435790";
 const char* mqtt_server = "192.168.178.2";
 
 // Pin settings
-// uint8_t LED_Pin = D4;
-const int led_pin = 2;
-const int sensor_pin = 4;
+const uint8_t led_pin = D4;
+const uint8_t sensor_pin = D2;
+const uint8_t transmitter_pin = D7;
 
 // Sensor variables
 DHTesp dht;
@@ -27,6 +28,9 @@ long waitBetweenMsgs = 5000; // 5s
 const int max_msg_length = 128;
 char msg[max_msg_length];
 
+// 433 Mhz Transmitter variables
+RCSwitch mySwitch = RCSwitch();
+
 // LED Status
 bool is_led_on = false;
 
@@ -36,6 +40,8 @@ void setup() {
   setup_dht_sensor();
   setup_wifi();
   setup_pub_sub_client();
+  
+  mySwitch.enableTransmit(transmitter_pin);
 }
 
 void setup_wifi() {
@@ -69,6 +75,7 @@ void setup_dht_sensor() {
 void setup_pub_sub_client() {
   client.setClient(espClient);
   client.setServer(mqtt_server, 1883);
+  client.setCallback(callback);
 }
 
 void reconnect() {
@@ -80,6 +87,8 @@ void reconnect() {
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish("gardo1/status", "Ready to send environmental data.");
+      // ... and resubscribe
+      client.subscribe("gardo1/rc-switch");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -88,6 +97,53 @@ void reconnect() {
       delay(5000);
     }
   }
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+
+  // Convert to string
+  String strData;
+  for (int i = 0; i < length; i++) {
+    strData += (char)payload[i];
+  }
+  
+  Serial.println(strData);
+
+  // Parse payload
+  StaticJsonBuffer<200> jsonBuffer;
+  JsonObject& root = jsonBuffer.parseObject(strData);
+  if (!root.success()) {
+    Serial.println("parseObject() of mqtt payload failed");
+    return;
+  }
+
+  const char* systemCode = root["systemCode"] | "00000";
+  const char* unitCode = root["unitCode"] | "00000";
+  const char* switchTo = root["switchTo"] | "off";
+
+  if (strcmp(switchTo, "on") == 0)
+  {
+    Serial.print("Switch systemCode=");
+    Serial.print(systemCode);
+    Serial.print(" unitCode=");
+    Serial.print(unitCode);
+    Serial.println(" on");
+    mySwitch.switchOn(systemCode, unitCode);
+  }
+  
+  if (strcmp(switchTo, "off") == 0)
+  {
+    Serial.print("Switch systemCode=");
+    Serial.print(systemCode);
+    Serial.print(" unitCode=");
+    Serial.print(unitCode);
+    Serial.println(" off");
+    mySwitch.switchOff(systemCode, unitCode);
+  }
+  delay(1000);
 }
 
 const char* getSensorName(DHTesp::DHT_MODEL_t model) 
