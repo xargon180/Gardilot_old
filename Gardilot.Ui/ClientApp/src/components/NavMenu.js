@@ -1,9 +1,10 @@
 import React from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './NavMenu.css';
 
-export default class NavMenu extends React.Component {
+export class NavMenu extends React.Component {
     constructor(props) {
         super(props);
 
@@ -18,6 +19,8 @@ export default class NavMenu extends React.Component {
         });
     }
     render() {
+        const { isAuthenticated } = this.props
+
         return (
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light >
@@ -33,11 +36,13 @@ export default class NavMenu extends React.Component {
                                     <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
-                                </NavItem>
-                                <NavItem>
                                     <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
                                 </NavItem>
+                                {!isAuthenticated &&
+                                    <NavItem>
+                                        <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
+                                    </NavItem>
+                                }
                             </ul>
                         </Collapse>
                     </Container>
@@ -46,3 +51,7 @@ export default class NavMenu extends React.Component {
         );
     }
 }
+
+export default connect(
+    state => state.login
+)(NavMenu);
