@@ -52,7 +52,7 @@ namespace Gardilot.Ui
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
             services.AddMvc(options => options.EnableEndpointRouting = false)
-                .AddNewtonsoftJson();
+                .AddNewtonsoftJson(s => s.UseCamelCasing(true));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
