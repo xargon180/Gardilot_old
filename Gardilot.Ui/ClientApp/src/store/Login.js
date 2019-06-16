@@ -33,11 +33,11 @@ export const actionCreators = {
         }
     },
     logoutUser: () => (dispatch, getState) => {
-        dispatch({ type: logoutRequestType, isFetching: true, isAuthenticated: true });
+        dispatch({ type: logoutRequestType });
 
         localStorage.removeItem('token')
 
-        dispatch({ type: logoutSuccessType, isFetching: false, isAuthenticated: false })
+        dispatch({ type: logoutSuccessType })
     }
 };
 
@@ -67,7 +67,35 @@ export const reducer = (state, action) => {
     if (action.type === loginFailureType) {
         return {
             ...state,
+            isFetching: false,
+            isAuthenticated: false,
+            errorMessage: action.message
+        };
+    }
+
+
+
+
+    if (action.type === logoutRequestType) {
+        return {
+            ...state,
             isFetching: true,
+            isAuthenticated: true
+        };
+    }
+
+    if (action.type === logoutSuccessType) {
+        return {
+            ...state,
+            isFetching: false,
+            isAuthenticated: false,
+        };
+    }
+
+    if (action.type === logoutFailureType) {
+        return {
+            ...state,
+            isFetching: false,
             isAuthenticated: false,
             errorMessage: action.message
         };

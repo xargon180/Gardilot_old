@@ -19,7 +19,7 @@ export class NavMenu extends React.Component {
         });
     }
     render() {
-        const { isAuthenticated } = this.props
+        const { isAuthenticated, userName } = this.props
 
         return (
             <header>
@@ -42,6 +42,9 @@ export class NavMenu extends React.Component {
                                     <NavItem>
                                         <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
                                     </NavItem>
+                                }
+                                {isAuthenticated &&
+                                    <NavLink tag={Link} className="text-dark" to="/logout">Logout {userName}</NavLink>
                                 }
                             </ul>
                         </Collapse>
