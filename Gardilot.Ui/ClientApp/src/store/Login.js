@@ -1,4 +1,4 @@
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 
 const loginRequestType = 'LOGIN_REQUEST'
 const loginSuccessType = 'LOGIN_SUCCESS'
