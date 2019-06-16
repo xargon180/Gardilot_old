@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux'
+
 const loginRequestType = 'LOGIN_REQUEST'
 const loginSuccessType = 'LOGIN_SUCCESS'
 const loginFailureType = 'LOGIN_FAILURE'
@@ -27,6 +29,7 @@ export const actionCreators = {
         if (responseData.token) {
             localStorage.setItem("token", responseData.token)
             dispatch({ type: loginSuccessType, creds, token: responseData.token });
+            dispatch(push('/'))
         }
         else {
             dispatch({ type: loginFailureType, message: 'Login failed' });
