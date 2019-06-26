@@ -9,7 +9,7 @@ const logoutSuccessType = 'LOGOUT_SUCCESS'
 const logoutFailureType = 'LOGOUT_FAILURE'
 
 // TODO: Check if token in store is expired
-const initialState = { isFetching: false, isAuthenticated: localStorage.getItem('token') ? true : false, token: null, userName: null };
+const initialState = { isFetching: false, isAuthenticated: localStorage.getItem('token') ? true : false, token: null, userName: localStorage.getItem('userName') };
 
 export const actionCreators = {
     requestLogin: creds => async (dispatch, getState) => {
@@ -28,6 +28,7 @@ export const actionCreators = {
 
         if (responseData.token) {
             localStorage.setItem("token", responseData.token)
+            localStorage.setItem("userName", creds.userName)
             dispatch({ type: loginSuccessType, creds, token: responseData.token });
             dispatch(push('/'))
         }
@@ -39,8 +40,10 @@ export const actionCreators = {
         dispatch({ type: logoutRequestType });
 
         localStorage.removeItem('token')
+        localStorage.removeItem('userName')
 
         dispatch({ type: logoutSuccessType })
+        dispatch(push('/'))
     }
 };
 
