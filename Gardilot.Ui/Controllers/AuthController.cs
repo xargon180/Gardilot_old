@@ -34,7 +34,26 @@ namespace Gardilot.Ui.Controllers
             if (_options.Value.Users.Any(u => u.UserName.Equals(login.UserName, StringComparison.OrdinalIgnoreCase) && u.Password.Equals(login.Password)))
             {
                 var tokenString = _jwtService.GenerateJSONWebToken();
-                return Ok(new { Token = tokenString });
+                return Ok(new TokenViewModel { Token = tokenString });
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("[action]")]
+        public IActionResult Validate([FromBody]TokenViewModel token)
+        {
+            if (token == null)
+            {
+                return BadRequest("Invalid client request");
+            }
+
+            if (_jwtService.ValidateGenerateJSONWebToken(token.Token))
+            {
+                return Ok();
             }
             else
             {

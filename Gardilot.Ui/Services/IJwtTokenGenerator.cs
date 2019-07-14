@@ -3,5 +3,6 @@
     public interface IJwtTokenGenerator
     {
         string GenerateJSONWebToken();
+        bool ValidateGenerateJSONWebToken(string token);
     }
 }
