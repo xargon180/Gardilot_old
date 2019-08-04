@@ -1,4 +1,4 @@
-import { push } from 'connected-react-router'
+import { push } from 'connected-react-router';
 
 const loginRequestType = 'LOGIN_REQUEST'
 const loginSuccessType = 'LOGIN_SUCCESS'
@@ -9,7 +9,14 @@ const logoutSuccessType = 'LOGOUT_SUCCESS'
 const logoutFailureType = 'LOGOUT_FAILURE'
 
 // TODO: Check if token in store is expired
-const initialState = { isFetching: false, isAuthenticated: localStorage.getItem('token') ? true : false, token: null, userName: localStorage.getItem('userName') };
+function getInitialState() {
+    return {
+        isFetching: false,
+        isAuthenticated: localStorage.getItem('token') ? true : false,
+        token: null,
+        userName: localStorage.getItem('userName')
+    };
+}
 
 export const actionCreators = {
     requestLogin: creds => async (dispatch, getState) => {
@@ -44,11 +51,31 @@ export const actionCreators = {
 
         dispatch({ type: logoutSuccessType })
         dispatch(push('/'))
+    },
+    validateToken: () => async (dispatch, getState) => {
+        dispatch({ type: logoutRequestType });
+
+        const url = 'api/Auth/Validate';
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify({ token: localStorage.getItem('token') })
+        });
+        if (!response.ok) {
+            localStorage.removeItem('token')
+            localStorage.removeItem('userName')
+
+            dispatch({ type: logoutSuccessType })
+            dispatch(push('/'))
+        }
     }
 };
 
 export const reducer = (state, action) => {
-    state = state || initialState;
+    state = state || getInitialState();
 
     if (action.type === loginRequestType) {
         return {
