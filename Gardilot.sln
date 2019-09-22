@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29230.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardilot.CommandLine", "Gardilot.CommandLine\Gardilot.CommandLine.csproj", "{5CF75473-A915-45D0-AC81-8267CF4695FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardilot.SharedKernel", "Gardilot.SharedKernel\Gardilot.SharedKernel.csproj", "{51E5080A-AED4-4C2A-9CE7-0F7BFFFDBE77}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardilot.Ui", "Gardilot.Ui\Gardilot.Ui.csproj", "{FFDE3607-BC13-4BE7-B9FC-6ED0FB4DC18C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardilot.Server", "Gardilot.Blazor\Server\Gardilot.Server.csproj", "{473478D7-B887-4EA0-81F0-2AEBA0113600}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardilot.Client", "Gardilot.Blazor\Client\Gardilot.Client.csproj", "{B85883E4-B539-49FC-8104-9625B2828CB0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gardilot.Shared", "Gardilot.Blazor\Shared\Gardilot.Shared.csproj", "{939D90FD-0445-4356-B5A2-4FB9AFB95902}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{FFDE3607-BC13-4BE7-B9FC-6ED0FB4DC18C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFDE3607-BC13-4BE7-B9FC-6ED0FB4DC18C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFDE3607-BC13-4BE7-B9FC-6ED0FB4DC18C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{473478D7-B887-4EA0-81F0-2AEBA0113600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{473478D7-B887-4EA0-81F0-2AEBA0113600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{473478D7-B887-4EA0-81F0-2AEBA0113600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{473478D7-B887-4EA0-81F0-2AEBA0113600}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B85883E4-B539-49FC-8104-9625B2828CB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B85883E4-B539-49FC-8104-9625B2828CB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B85883E4-B539-49FC-8104-9625B2828CB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B85883E4-B539-49FC-8104-9625B2828CB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{939D90FD-0445-4356-B5A2-4FB9AFB95902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{939D90FD-0445-4356-B5A2-4FB9AFB95902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{939D90FD-0445-4356-B5A2-4FB9AFB95902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{939D90FD-0445-4356-B5A2-4FB9AFB95902}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
